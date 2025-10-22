@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Geovani dos Santos - AI, Data Science & Cybersecurity Consultant</title>
+    <link rel="icon" type="image/png" href="https://uploads.onecompiler.io/4425n5bjj/4425myajg/photo_geo.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -11,9 +12,9 @@
                 extend: {
                     colors: {
                         'deep-blue': '#0B1426',
-                        'trust-blue': '#1E3A8A',
+                        'trust-blue': '#1E3A8A', /* Added to Tailwind config */
                         'emerald': '#10B981',
-                        'neon-cyan': '#06B6D4',
+                        'neon-cyan': '#00fff7', /* Updated for more vibrant neon */
                         'neon-purple': '#8B5CF6'
                     },
                     fontFamily: {
@@ -25,10 +26,6 @@
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            box-sizing: border-box;
-        }
-        
         .gradient-bg {
             background: linear-gradient(135deg, #0B1426 0%, #1E3A8A 50%, #10B981 100%);
             background-size: 400% 400%;
@@ -55,32 +52,76 @@
             box-shadow: 0 20px 40px rgba(6, 182, 212, 0.2);
         }
         
-        .pulse-glow {
+        .pulse-glow { /* Updated box-shadow color to match new neon-cyan */
             animation: pulseGlow 2s ease-in-out infinite alternate;
         }
-        
         @keyframes pulseGlow {
-            from { box-shadow: 0 0 20px rgba(6, 182, 212, 0.3); }
-            to { box-shadow: 0 0 30px rgba(6, 182, 212, 0.6); }
+            from { box-shadow: 0 0 25px rgba(0, 255, 247, 0.4); }
+            to { box-shadow: 0 0 45px rgba(0, 255, 247, 0.8); }
         }
-        
         .fade-in {
             opacity: 0;
             transform: translateY(30px);
-            animation: fadeInUp 0.8s ease-out forwards;
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
         
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* Class to trigger the animation */
+        .is-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         
-        .stagger-1 { animation-delay: 0.1s; }
-        .stagger-2 { animation-delay: 0.2s; }
-        .stagger-3 { animation-delay: 0.3s; }
-        .stagger-4 { animation-delay: 0.4s; }
+        .stagger-1 { transition-delay: 0.1s; }
+        .stagger-2 { transition-delay: 0.2s; }
+        .stagger-3 { transition-delay: 0.3s; }
+        .stagger-4 { transition-delay: 0.4s; }
+
+        .nav-active {
+            color: #00fff7; /* neon-cyan */
+            text-shadow: 0 0 5px rgba(0, 255, 247, 0.7);
+        }
+
+        /* Text Rotator Styles */
+        .text-rotator-container {
+            display: inline-block;
+            position: relative;
+            vertical-align: bottom; /* Aligns the rotating word with the surrounding text */
+            height: 1.2em; /* Adjust based on font size and line height */
+        }
+
+        .text-rotator-container .word {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transform: translateY(1em);
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+        }
+
+        .text-rotator-container .word.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Headline Glow Effect */
+        .glow-cyan { animation: textGlowCyan 1.5s ease-in-out infinite alternate; }
+        .glow-emerald { animation: textGlowEmerald 1.5s ease-in-out infinite alternate; }
+        .glow-purple { animation: textGlowPurple 1.5s ease-in-out infinite alternate; }
+
+        @keyframes textGlowCyan {
+            from { text-shadow: 0 0 5px rgba(0, 255, 247, 0.5), 0 0 10px rgba(0, 255, 247, 0.4); }
+            to { text-shadow: 0 0 10px rgba(0, 255, 247, 0.8), 0 0 20px rgba(0, 255, 247, 0.6); }
+        }
+
+        @keyframes textGlowEmerald {
+            from { text-shadow: 0 0 5px rgba(16, 185, 129, 0.5), 0 0 10px rgba(16, 185, 129, 0.4); }
+            to { text-shadow: 0 0 10px rgba(16, 185, 129, 0.8), 0 0 20px rgba(16, 185, 129, 0.6); }
+        }
+
+        @keyframes textGlowPurple {
+            from { text-shadow: 0 0 5px rgba(139, 92, 246, 0.5), 0 0 10px rgba(139, 92, 246, 0.4); }
+            to { text-shadow: 0 0 10px rgba(139, 92, 246, 0.8), 0 0 20px rgba(139, 92, 246, 0.6); }
+        }
     </style>
 </head>
 <body class="bg-deep-blue text-white font-sans">
@@ -88,51 +129,52 @@
     <nav class="fixed top-0 w-full bg-deep-blue/90 backdrop-blur-md z-50 border-b border-trust-blue/20">
         <div class="max-w-6xl mx-auto px-6 py-4">
             <div class="flex justify-between items-center">
-                <div class="text-xl font-bold text-neon-cyan">Geovani dos Santos</div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="#home" class="hover:text-neon-cyan transition-colors">Home</a>
-                    <a href="#about" class="hover:text-neon-cyan transition-colors">About</a>
-                    <a href="#services" class="hover:text-neon-cyan transition-colors">Services</a>
-                    <a href="#projects" class="hover:text-neon-cyan transition-colors">Projects</a>
-                    <a href="#publications" class="hover:text-neon-cyan transition-colors">Publications</a>
-                    <a href="#contact" class="hover:text-neon-cyan transition-colors">Contact</a>
+                <a href="#home" class="text-xl font-bold text-neon-cyan">Geovani dos Santos</a>
+                <div id="desktop-nav" class="hidden md:flex space-x-8">
+                    <a href="#home" class="nav-link hover:text-neon-cyan transition-colors">Home</a>
+                    <a href="#about" class="nav-link hover:text-neon-cyan transition-colors">About</a>
+                    <a href="#services" class="nav-link hover:text-neon-cyan transition-colors">Services</a>
+                    <a href="#projects" class="nav-link hover:text-neon-cyan transition-colors">Projects</a>
+                    <a href="#publications" class="nav-link hover:text-neon-cyan transition-colors">Publications</a>
+                    <a href="#contact" class="nav-link hover:text-neon-cyan transition-colors">Contact</a>
                 </div>
-                <button id="mobile-menu-btn" class="md:hidden text-neon-cyan">
+                <button id="mobile-menu-btn" class="md:hidden text-neon-cyan" aria-label="Open menu">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                     </svg>
                 </button>
             </div>
             <div id="mobile-menu" class="hidden md:hidden mt-4 space-y-2">
-                <a href="#home" class="block py-2 hover:text-neon-cyan transition-colors">Home</a>
-                <a href="#about" class="block py-2 hover:text-neon-cyan transition-colors">About</a>
-                <a href="#services" class="block py-2 hover:text-neon-cyan transition-colors">Services</a>
-                <a href="#projects" class="block py-2 hover:text-neon-cyan transition-colors">Projects</a>
-                <a href="#publications" class="block py-2 hover:text-neon-cyan transition-colors">Publications</a>
-                <a href="#contact" class="block py-2 hover:text-neon-cyan transition-colors">Contact</a>
+                <a href="#home" class="nav-link-mobile block py-2 hover:text-neon-cyan transition-colors">Home</a>
+                <a href="#about" class="nav-link-mobile block py-2 hover:text-neon-cyan transition-colors">About</a>
+                <a href="#services" class="nav-link-mobile block py-2 hover:text-neon-cyan transition-colors">Services</a>
+                <a href="#projects" class="nav-link-mobile block py-2 hover:text-neon-cyan transition-colors">Projects</a>
+                <a href="#publications" class="nav-link-mobile block py-2 hover:text-neon-cyan transition-colors">Publications</a>
+                <a href="#contact" class="nav-link-mobile block py-2 hover:text-neon-cyan transition-colors">Contact</a>
             </div>
         </div>
     </nav>
 
+    <main>
     <!-- Home Section -->
-    <section id="home" class="min-h-full gradient-bg circuit-pattern flex items-center pt-20">
+    <section id="home" class="min-h-screen gradient-bg circuit-pattern flex items-center pt-20">
         <div class="max-w-6xl mx-auto px-6 py-20">
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div class="space-y-8">
                     <h1 class="text-5xl md:text-6xl font-bold leading-tight fade-in">
-                        Building a <span class="text-neon-cyan">Secure</span>, 
-                        <span class="text-emerald">Intelligent</span>, and 
-                        <span class="text-neon-purple">Ethical</span> Future
+                        Building a <span class="text-neon-cyan glow-cyan">Secure</span>, 
+                        <span class="text-emerald glow-emerald">Intelligent</span>, and 
+                        <span class="text-neon-purple glow-purple">Ethical</span> Future
                     </h1>
                     <p class="text-xl text-gray-300 leading-relaxed fade-in stagger-1">
                         Empowering organizations through the intersection of AI, Data Science, and Cybersecurity — 
                         where technology meets ethics and humanity.
                     </p>
                     <div class="flex flex-wrap gap-4 fade-in stagger-2">
-                        <a href="#about" class="bg-neon-cyan text-deep-blue px-8 py-3 rounded-lg font-semibold hover:bg-neon-cyan/90 transition-colors">
+                        <a href="#about" class="bg-neon-cyan text-deep-blue px-8 py-3 rounded-lg font-semibold hover:bg-neon-cyan/90 transition-colors cursor-pointer">
                             Explore My Mission
                         </a>
-                        <a href="#contact" class="border border-neon-cyan text-neon-cyan px-8 py-3 rounded-lg font-semibold hover:bg-neon-cyan/10 transition-colors">
+                        <a href="#contact" class="border border-neon-cyan text-neon-cyan px-8 py-3 rounded-lg font-semibold hover:bg-neon-cyan/10 transition-colors cursor-pointer">
                             Let's Connect
                         </a>
                     </div>
@@ -143,7 +185,7 @@
                         <div class="w-80 h-80 rounded-full bg-gradient-to-br from-neon-cyan to-emerald p-1 pulse-glow">
                             <div class="w-full h-full rounded-full bg-deep-blue flex items-center justify-center">
                                 <div class="w-72 h-72 rounded-full bg-gradient-to-br from-trust-blue to-emerald flex items-center justify-center">
-                                    <img src="https://uploads.onecompiler.io/4425n5bjj/4425myajg/photo_geo.png" alt="Geovani dos Santos" class="w-full h-full rounded-full object-cover">
+                                    <img src="https://uploads.onecompiler.io/4425n5bjj/4425myajg/photo_geo.png" alt="Geovani dos Santos" class="w-full h-full rounded-full object-cover" loading="lazy" decoding="async">
                                 </div>
                             </div>
                         </div>
@@ -380,44 +422,44 @@
                             <span>Connect on LinkedIn</span>
                         </a>
                         
-                        <div class="flex items-center space-x-3 text-emerald">
+                        <a href="mailto:geovanis.business@gmail.com" class="flex items-center space-x-3 text-emerald hover:text-emerald/80 transition-colors">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                             </svg>
                             <span>geovanis.business@gmail.com</span>
-                        </div>
+                        </a>
                     </div>
                 </div>
                 
-                <form id="contact-form" class="space-y-6">
+                <!-- WhatsApp Contact Form -->
+                <form id="whatsapp-form" class="space-y-6">
                     <div>
-                        <label for="name" class="block text-sm font-medium mb-2">Name</label>
-                        <input type="text" id="name" name="name" required
+                        <label for="wa-name" class="block text-sm font-medium mb-2 text-gray-300">Name</label>
+                        <input type="text" id="wa-name" name="wa-name" required
                                class="w-full px-4 py-3 bg-deep-blue/50 border border-neon-cyan/20 rounded-lg focus:border-neon-cyan focus:outline-none transition-colors">
                     </div>
                     
                     <div>
-                        <label for="email" class="block text-sm font-medium mb-2">Email</label>
-                        <input type="email" id="email" name="email" required
+                        <label for="wa-email" class="block text-sm font-medium mb-2 text-gray-300">Email</label>
+                        <input type="email" id="wa-email" name="wa-email" required
                                class="w-full px-4 py-3 bg-deep-blue/50 border border-neon-cyan/20 rounded-lg focus:border-neon-cyan focus:outline-none transition-colors">
                     </div>
                     
                     <div>
-                        <label for="message" class="block text-sm font-medium mb-2">Message</label>
-                        <textarea id="message" name="message" rows="5" required
+                        <label for="wa-message" class="block text-sm font-medium mb-2 text-gray-300">Message</label>
+                        <textarea id="wa-message" name="wa-message" rows="5" required
                                   class="w-full px-4 py-3 bg-deep-blue/50 border border-neon-cyan/20 rounded-lg focus:border-neon-cyan focus:outline-none transition-colors resize-none"></textarea>
                     </div>
                     
                     <button type="submit" 
                             class="w-full bg-neon-cyan text-deep-blue py-3 rounded-lg font-semibold hover:bg-neon-cyan/90 transition-colors">
-                        Send Message
+                        Send via WhatsApp
                     </button>
-                    
-                    <div id="form-message" class="hidden text-center p-4 rounded-lg"></div>
                 </form>
             </div>
         </div>
     </section>
+    </main>
 
     <!-- Footer -->
     <footer class="py-12 border-t border-trust-blue/20">
@@ -443,46 +485,28 @@
 
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                    // Close mobile menu if open
-                    mobileMenu.classList.add('hidden');
-                }
+            anchor.addEventListener('click', function () {
+                // Close mobile menu on link click
+                // The `scroll-smooth` class on <html> handles the scrolling
+                mobileMenu.classList.add('hidden');
             });
         });
 
-        // Contact form handling
-        const contactForm = document.getElementById('contact-form');
-        const formMessage = document.getElementById('form-message');
-        
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form data
-            const formData = new FormData(contactForm);
-            const name = formData.get('name');
-            const email = formData.get('email');
-            const message = formData.get('message');
-            
-            // Show success message
-            formMessage.className = 'text-center p-4 rounded-lg bg-emerald/20 text-emerald border border-emerald/20';
-            formMessage.textContent = `Thank you, ${name}! Your message has been received. I'll get back to you soon.`;
-            formMessage.classList.remove('hidden');
-            
-            // Reset form
-            contactForm.reset();
-            
-            // Hide message after 5 seconds
-            setTimeout(() => {
-                formMessage.classList.add('hidden');
-            }, 5000);
-        });
+      const whatsappForm = document.getElementById('whatsapp-form');
+      whatsappForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+  
+          const name = document.getElementById('wa-name').value.trim();
+          const email = document.getElementById('wa-email').value.trim();
+          const message = document.getElementById('wa-message').value.trim();
+  
+          if (name && email && message) {
+              const phone = "5585989045569";
+              const text = `Hello, my name is ${name} (${email}).\n\n${message}`;
+              const url = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(text)}`;
+              window.open(url, "_blank");
+          }
+      });
 
         // Add scroll effect to navigation
         window.addEventListener('scroll', () => {
@@ -502,17 +526,49 @@
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animationPlayState = 'running';
+                if (entry.isIntersecting) { // Element is in view
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target); // Stop observing once animated
                 }
             });
         }, observerOptions);
 
         // Observe all fade-in elements
-        document.querySelectorAll('.fade-in').forEach(el => {
-            el.style.animationPlayState = 'paused';
-            observer.observe(el);
-        });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Text Rotator Logic
+        const rotatorContainer = document.getElementById('text-rotator');
+        if (rotatorContainer) {
+            const words = rotatorContainer.querySelectorAll('.word');
+            let currentIndex = 0;
+
+            const setContainerWidth = () => {
+                // Find the longest word to set the container width
+                let maxWidth = 0;
+                words.forEach(word => {
+                    word.classList.add('active'); // Temporarily make it visible to measure
+                    if (word.offsetWidth > maxWidth) {
+                        maxWidth = word.offsetWidth;
+                    }
+                    word.classList.remove('active');
+                });
+                rotatorContainer.style.width = `${maxWidth}px`;
+                words[0].classList.add('active'); // Set the first word as active initially
+            };
+
+            const rotateWords = () => {
+                const currentWord = words[currentIndex];
+                const nextIndex = (currentIndex + 1) % words.length;
+                const nextWord = words[nextIndex];
+
+                currentWord.classList.remove('active');
+                nextWord.classList.add('active');
+                currentIndex = nextIndex;
+            };
+
+            setContainerWidth();
+            setInterval(rotateWords, 2500); // Rotate every 2.5 seconds
+        }
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99135f7603d8f610',t:'MTc2MDkwOTM4Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
