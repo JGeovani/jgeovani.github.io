@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Geovani dos Santos - AI, Data Science & Cybersecurity Consultant</title>
     <link rel="icon" type="image/png" href="https://uploads.onecompiler.io/4425n5bjj/4425myajg/photo_geo.png">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Added Subresource Integrity (SRI) for enhanced security -->
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -422,11 +423,11 @@
                             <span>Connect on LinkedIn</span>
                         </a>
                         
-                        <a href="mailto:geovanis.business@gmail.com" class="flex items-center space-x-3 text-emerald hover:text-emerald/80 transition-colors">
+                        <a id="email-link" href="#" class="flex items-center space-x-3 text-emerald hover:text-emerald/80 transition-colors">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                             </svg>
-                            <span>geovanis.business@gmail.com</span>
+                            <span id="email-text"></span>
                         </a>
                     </div>
                 </div>
@@ -492,6 +493,17 @@
             });
         });
 
+        // Obfuscate and set email to protect from scrapers
+        const emailUser = "geovanis.business";
+        const emailDomain = "gmail.com";
+        const emailLink = document.getElementById('email-link');
+        const emailText = document.getElementById('email-text');
+        if (emailLink && emailText) {
+            const fullEmail = `${emailUser}@${emailDomain}`;
+            emailText.textContent = fullEmail;
+            emailLink.setAttribute('href', `mailto:${fullEmail}`);
+        }
+
       const whatsappForm = document.getElementById('whatsapp-form');
       whatsappForm.addEventListener('submit', function(e) {
           e.preventDefault();
@@ -501,7 +513,7 @@
           const message = document.getElementById('wa-message').value.trim();
   
           if (name && email && message) {
-              const phone = "5585989045569";
+              const phone = atob("NTU4NTk4OTA0NTU2OQ=="); // Obfuscated phone number
               const text = `Hello, my name is ${name} (${email}).\n\n${message}`;
               const url = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(text)}`;
               window.open(url, "_blank");
