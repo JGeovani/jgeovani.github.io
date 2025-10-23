@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="pt-BR" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Geovani dos Santos - AI, Data Science & Cybersecurity Consultant</title>
     <link rel="icon" type="image/png" href="https://uploads.onecompiler.io/4425n5bjj/4425myajg/photo_geo.png">
     <!-- Added Subresource Integrity (SRI) for enhanced security -->
+    <!-- <script src="https://cdn.tailwindcss.com/3.4.4" integrity="sha384-4t26ZH8vY2OtIIa3X2trQs1MQB3T2t42AZjKJ/23Y/XN3iB52c3B5fF/w3jE5tp2I" crossorigin="anonymous"></script> -->
     <script src="https://cdn.tailwindcss.com/3.4.17"></script>
     <script>
         tailwind.config = {
@@ -123,6 +124,31 @@
             from { text-shadow: 0 0 5px rgba(139, 92, 246, 0.5), 0 0 10px rgba(139, 92, 246, 0.4); }
             to { text-shadow: 0 0 10px rgba(139, 92, 246, 0.8), 0 0 20px rgba(139, 92, 246, 0.6); }
         }
+
+        /* Language Dropdown Styles */
+        .lang-dropdown {
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+            pointer-events: none;
+        }
+
+        .lang-dropdown.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        /* Ensure mobile menu has space for language switcher */
+        #mobile-menu {
+            display: none; /* Start hidden */
+        }
+
+        #mobile-menu.show {
+            display: block;
+        }
+
+
     </style>
 </head>
 <body class="bg-deep-blue text-white font-sans">
@@ -130,14 +156,26 @@
     <nav class="fixed top-0 w-full bg-deep-blue/90 backdrop-blur-md z-50 border-b border-trust-blue/20">
         <div class="max-w-6xl mx-auto px-6 py-4">
             <div class="flex justify-between items-center">
-                <a href="#home" class="text-xl font-bold text-neon-cyan">Geovani dos Santos</a>
-                <div id="desktop-nav" class="hidden md:flex space-x-8">
-                    <a href="#home" class="nav-link hover:text-neon-cyan transition-colors">Home</a>
-                    <a href="#about" class="nav-link hover:text-neon-cyan transition-colors">About</a>
-                    <a href="#services" class="nav-link hover:text-neon-cyan transition-colors">Services</a>
-                    <a href="#projects" class="nav-link hover:text-neon-cyan transition-colors">Projects</a>
-                    <a href="#publications" class="nav-link hover:text-neon-cyan transition-colors">Publications</a>
-                    <a href="#contact" class="nav-link hover:text-neon-cyan transition-colors">Contact</a>
+                <a href="#home" class="flex items-center gap-3 text-xl font-bold text-neon-cyan">
+                    <img src="https://uploads.onecompiler.io/4425n5bjj/4425myajg/photo_geo.png" alt="Geovani dos Santos Logo" class="w-10 h-10 rounded-full border-2 border-neon-cyan/30">
+                    <span>Geovani dos Santos</span>
+                </a>
+                <div class="hidden md:flex items-center">
+                    <div id="desktop-nav" class="flex space-x-8" data-lang-key="desktop-nav-links">
+                        <a href="#home" class="nav-link hover:text-neon-cyan transition-colors">Home</a>
+                        <a href="#about" class="nav-link hover:text-neon-cyan transition-colors">About</a>
+                        <a href="#services" class="nav-link hover:text-neon-cyan transition-colors">Services</a>
+                        <a href="#projects" class="nav-link hover:text-neon-cyan transition-colors">Projects</a>
+                        <a href="#publications" class="nav-link hover:text-neon-cyan transition-colors">Publications</a>
+                        <a href="#contact" class="nav-link hover:text-neon-cyan transition-colors">Contact</a>
+                    </div>
+                    <!-- Language Switcher Desktop -->
+                    <div id="desktop-lang-switcher" class="relative border-l border-trust-blue/30 ml-8 pl-8">
+                        <button id="desktop-lang-toggle" class="text-2xl"></button>
+                        <div id="desktop-lang-menu" class="lang-dropdown absolute right-0 mt-2 w-max bg-deep-blue/95 backdrop-blur-sm border border-trust-blue/30 rounded-lg shadow-lg z-10">
+                            <!-- Options will be populated by JS -->
+                        </div>
+                    </div>
                 </div>
                 <button id="mobile-menu-btn" class="md:hidden text-neon-cyan" aria-label="Open menu">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -145,13 +183,22 @@
                     </svg>
                 </button>
             </div>
-            <div id="mobile-menu" class="hidden md:hidden mt-4 space-y-2">
-                <a href="#home" class="nav-link-mobile block py-2 hover:text-neon-cyan transition-colors">Home</a>
-                <a href="#about" class="nav-link-mobile block py-2 hover:text-neon-cyan transition-colors">About</a>
-                <a href="#services" class="nav-link-mobile block py-2 hover:text-neon-cyan transition-colors">Services</a>
-                <a href="#projects" class="nav-link-mobile block py-2 hover:text-neon-cyan transition-colors">Projects</a>
-                <a href="#publications" class="nav-link-mobile block py-2 hover:text-neon-cyan transition-colors">Publications</a>
-                <a href="#contact" class="nav-link-mobile block py-2 hover:text-neon-cyan transition-colors">Contact</a>
+            <div id="mobile-menu" class="md:hidden mt-4">
+                <div class="space-y-2" data-lang-key="mobile-nav-links">
+                    <a href="#home" class="nav-link block py-2 hover:text-neon-cyan transition-colors">Home</a>
+                    <a href="#about" class="nav-link block py-2 hover:text-neon-cyan transition-colors">About</a>
+                    <a href="#services" class="nav-link block py-2 hover:text-neon-cyan transition-colors">Services</a>
+                    <a href="#projects" class="nav-link block py-2 hover:text-neon-cyan transition-colors">Projects</a>
+                    <a href="#publications" class="nav-link block py-2 hover:text-neon-cyan transition-colors">Publications</a>
+                    <a href="#contact" class="nav-link block py-2 hover:text-neon-cyan transition-colors">Contact</a>
+                </div>
+                <!-- Language Switcher Mobile -->
+                <div id="mobile-lang-switcher" class="relative border-t border-trust-blue/30 pt-4 mt-4 flex justify-center">
+                     <button id="mobile-lang-toggle" class="text-3xl"></button>
+                     <div id="mobile-lang-menu" class="lang-dropdown absolute bottom-full mb-2 w-max bg-deep-blue/95 backdrop-blur-sm border border-trust-blue/30 rounded-lg shadow-lg z-10">
+                         <!-- Options will be populated by JS -->
+                     </div>
+                </div>
             </div>
         </div>
     </nav>
@@ -161,7 +208,7 @@
     <section id="home" class="min-h-screen gradient-bg circuit-pattern flex items-center pt-20">
         <div class="max-w-6xl mx-auto px-6 py-20">
             <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div class="space-y-8">
+                <div class="space-y-8" data-lang-key="home-text-content">
                     <h1 class="text-5xl md:text-6xl font-bold leading-tight fade-in">
                         Building a <span class="text-neon-cyan glow-cyan">Secure</span>, 
                         <span class="text-emerald glow-emerald">Intelligent</span>, and 
@@ -171,7 +218,7 @@
                         Empowering organizations through the intersection of AI, Data Science, and Cybersecurity — 
                         where technology meets ethics and humanity.
                     </p>
-                    <div class="flex flex-wrap gap-4 fade-in stagger-2">
+                    <div class="flex flex-wrap gap-4 fade-in stagger-2" >
                         <a href="#about" class="bg-neon-cyan text-deep-blue px-8 py-3 rounded-lg font-semibold hover:bg-neon-cyan/90 transition-colors cursor-pointer">
                             Explore My Mission
                         </a>
@@ -201,54 +248,62 @@
     <section id="about" class="py-20 bg-trust-blue/20">
         <div class="max-w-6xl mx-auto px-6">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-6">About Geovani</h2>
-                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                <h2 class="text-4xl font-bold mb-6" data-lang-key="about-title">About</h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto" data-lang-key="about-subtitle">
                     A forward-thinking professional consultant embodying the intersection of technology, ethics, and humanity
                 </p>
             </div>
             
-            <div class="grid md:grid-cols-2 gap-12 mb-16">
-                <div class="space-y-6">
-                    <h3 class="text-2xl font-semibold text-neon-cyan">Mission Statement</h3>
-                    <p class="text-gray-300 leading-relaxed">
-                        To empower organizations to make technology more ethical, inclusive, and impactful for society. 
-                        I combine a hacker mindset with transformational leadership and a deep commitment to security, 
-                        innovation, and sustainability.
-                    </p>
-                    <h3 class="text-2xl font-semibold text-emerald">Personal Journey</h3>
-                    <p class="text-gray-300 leading-relaxed">
-                        From Fortaleza city to global impact — connecting human purpose with technological excellence. 
-                        My journey represents the bridge between cutting-edge technology and meaningful human progress.
+            <!-- Mission & Journey -->
+            <div class="grid md:grid-cols-2 gap-12 mb-20">
+                <div class="fade-in">
+                    <h3 class="text-2xl font-semibold text-neon-cyan mb-4" data-lang-key="about-mission-title">Mission</h3>
+                    <p class="text-gray-300 leading-relaxed" data-lang-key="about-mission-text">
+                        To empower organizations to make technology more ethical, inclusive, and impactful for society. I combine a hacker mindset with transformational leadership and a deep commitment to security, innovation, and sustainability.
                     </p>
                 </div>
-                
-                <div class="space-y-6">
-                    <h3 class="text-2xl font-semibold text-neon-purple">Guiding Values</h3>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-deep-blue/50 p-4 rounded-lg border border-neon-cyan/20">
-                            <div class="text-neon-cyan font-semibold">Integrity</div>
-                            <div class="text-sm text-gray-400">Ethical foundation</div>
-                        </div>
-                        <div class="bg-deep-blue/50 p-4 rounded-lg border border-emerald/20">
-                            <div class="text-emerald font-semibold">Curiosity</div>
-                            <div class="text-sm text-gray-400">Continuous learning</div>
-                        </div>
-                        <div class="bg-deep-blue/50 p-4 rounded-lg border border-neon-purple/20">
-                            <div class="text-neon-purple font-semibold">Inclusivity</div>
-                            <div class="text-sm text-gray-400">Technology for all</div>
-                        </div>
-                        <div class="bg-deep-blue/50 p-4 rounded-lg border border-neon-cyan/20">
-                            <div class="text-neon-cyan font-semibold">Innovation</div>
-                            <div class="text-sm text-gray-400">Future-focused</div>
-                        </div>
-                        <div class="bg-deep-blue/50 p-4 rounded-lg border border-emerald/20">
-                            <div class="text-emerald font-semibold">Sustainability</div>
-                            <div class="text-sm text-gray-400">Long-term impact</div>
-                        </div>
-                        <div class="bg-deep-blue/50 p-4 rounded-lg border border-neon-purple/20">
-                            <div class="text-neon-purple font-semibold">Resilience</div>
-                            <div class="text-sm text-gray-400">Adaptive strength</div>
-                        </div>
+                <div class="fade-in stagger-1">
+                    <h3 class="text-2xl font-semibold text-emerald mb-4" data-lang-key="about-journey-title">Journey</h3>
+                    <p class="text-gray-300 leading-relaxed" data-lang-key="about-journey-text">
+                        From Fortaleza city to global impact — connecting human purpose with technological excellence. My journey represents the bridge between cutting-edge technology and meaningful human progress.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Video Player -->
+            <div class="max-w-4xl mx-auto mb-20 fade-in stagger-2" data-lang-key="about-video-player">
+                <div class="relative aspect-video max-w-3xl mx-auto rounded-lg overflow-hidden border-2 border-neon-cyan/30 shadow-lg shadow-neon-cyan/10">
+                    <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/aGsmwgJkQGs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+                </div>
+            </div>
+
+            <!-- Guiding Values -->
+            <div class="fade-in stagger-3" data-lang-key="about-values-section">
+                <h3 class="text-2xl font-semibold text-neon-purple text-center mb-10" data-lang-key="about-values-title">Guiding Values</h3>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 text-center">
+                    <div class="bg-deep-blue/50 p-6 rounded-lg border border-neon-cyan/20">
+                        <div class="text-neon-cyan font-bold text-lg" data-lang-key="value-integrity">Integrity</div>
+                        <div class="text-sm text-gray-400 mt-1" data-lang-key="value-integrity-desc">Ethical foundation</div>
+                    </div>
+                    <div class="bg-deep-blue/50 p-6 rounded-lg border border-emerald/20">
+                        <div class="text-emerald font-bold text-lg" data-lang-key="value-curiosity">Curiosity</div>
+                        <div class="text-sm text-gray-400 mt-1" data-lang-key="value-curiosity-desc">Continuous learning</div>
+                    </div>
+                    <div class="bg-deep-blue/50 p-6 rounded-lg border border-neon-purple/20">
+                        <div class="text-neon-purple font-bold text-lg" data-lang-key="value-inclusivity">Inclusivity</div>
+                        <div class="text-sm text-gray-400 mt-1" data-lang-key="value-inclusivity-desc">Technology for all</div>
+                    </div>
+                    <div class="bg-deep-blue/50 p-6 rounded-lg border border-neon-cyan/20">
+                        <div class="text-neon-cyan font-bold text-lg" data-lang-key="value-innovation">Innovation</div>
+                        <div class="text-sm text-gray-400 mt-1" data-lang-key="value-innovation-desc">Future-focused</div>
+                    </div>
+                    <div class="bg-deep-blue/50 p-6 rounded-lg border border-emerald/20">
+                        <div class="text-emerald font-bold text-lg" data-lang-key="value-sustainability">Sustainability</div>
+                        <div class="text-sm text-gray-400 mt-1" data-lang-key="value-sustainability-desc">Long-term impact</div>
+                    </div>
+                    <div class="bg-deep-blue/50 p-6 rounded-lg border border-neon-purple/20">
+                        <div class="text-neon-purple font-bold text-lg" data-lang-key="value-resilience">Resilience</div>
+                        <div class="text-sm text-gray-400 mt-1" data-lang-key="value-resilience-desc">Adaptive strength</div>
                     </div>
                 </div>
             </div>
@@ -259,8 +314,8 @@
     <section id="services" class="py-20">
         <div class="max-w-6xl mx-auto px-6">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-6">Services</h2>
-                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                <h2 class="text-4xl font-bold mb-6" data-lang-key="services-title">Consulting Services</h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto" data-lang-key="services-subtitle">
                     Helping organizations anticipate and adapt to technological change through strategic consulting
                 </p>
             </div>
@@ -268,32 +323,32 @@
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <div class="bg-deep-blue/50 p-8 rounded-xl border border-neon-cyan/20 card-hover">
                     <div class="text-neon-cyan text-4xl mb-4">🤖</div>
-                    <h3 class="text-xl font-semibold mb-4 text-neon-cyan">Ethical AI & Data Strategy</h3>
-                    <p class="text-gray-300 text-sm leading-relaxed">
+                    <h3 class="text-xl font-semibold mb-4 text-neon-cyan" data-lang-key="service1-title">Ethical AI & Data Strategy</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed" data-lang-key="service1-desc">
                         Developing responsible AI frameworks that align with organizational values and societal impact goals.
                     </p>
                 </div>
                 
                 <div class="bg-deep-blue/50 p-8 rounded-xl border border-emerald/20 card-hover">
                     <div class="text-emerald text-4xl mb-4">🛡️</div>
-                    <h3 class="text-xl font-semibold mb-4 text-emerald">Cybersecurity Awareness</h3>
-                    <p class="text-gray-300 text-sm leading-relaxed">
+                    <h3 class="text-xl font-semibold mb-4 text-emerald" data-lang-key="service2-title">Cybersecurity Awareness</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed" data-lang-key="service2-desc">
                         Blue team defense strategies and security awareness programs that protect while enabling innovation.
                     </p>
                 </div>
                 
                 <div class="bg-deep-blue/50 p-8 rounded-xl border border-neon-purple/20 card-hover">
                     <div class="text-neon-purple text-4xl mb-4">🚀</div>
-                    <h3 class="text-xl font-semibold mb-4 text-neon-purple">Digital Transformation</h3>
-                    <p class="text-gray-300 text-sm leading-relaxed">
+                    <h3 class="text-xl font-semibold mb-4 text-neon-purple" data-lang-key="service3-title">Digital Transformation</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed" data-lang-key="service3-desc">
                         Leadership development programs that bridge technology adoption with human-centered change management.
                     </p>
                 </div>
                 
                 <div class="bg-deep-blue/50 p-8 rounded-xl border border-neon-cyan/20 card-hover">
                     <div class="text-neon-cyan text-4xl mb-4">🔮</div>
-                    <h3 class="text-xl font-semibold mb-4 text-neon-cyan">Future Readiness</h3>
-                    <p class="text-gray-300 text-sm leading-relaxed">
+                    <h3 class="text-xl font-semibold mb-4 text-neon-cyan" data-lang-key="service4-title">Future Readiness</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed" data-lang-key="service4-desc">
                         Strategic workshops helping organizations prepare for emerging technologies and market disruptions.
                     </p>
                 </div>
@@ -305,8 +360,8 @@
     <section id="projects" class="py-20 bg-trust-blue/20">
         <div class="max-w-6xl mx-auto px-6">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-6">Projects</h2>
-                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                <h2 class="text-4xl font-bold mb-6" data-lang-key="projects-title">Key Projects</h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto" data-lang-key="projects-subtitle">
                     Initiatives that demonstrate the power of technology aligned with social impact
                 </p>
             </div>
@@ -315,18 +370,18 @@
                 <div class="bg-deep-blue/50 p-8 rounded-xl border border-emerald/20 card-hover">
                     <div class="flex items-center mb-4">
                         <div class="text-emerald text-3xl mr-4">🌟</div>
-                        <h3 class="text-2xl font-semibold text-emerald">ViabilizAI</h3>
+                        <h3 class="text-2xl font-semibold text-emerald" data-lang-key="project1-title">ViabilizAI</h3>
                     </div>
-                    <p class="text-gray-300 mb-4 leading-relaxed">
+                    <p class="text-gray-300 mb-4 leading-relaxed" data-lang-key="project1-desc">
                         A groundbreaking program enabling social mobility through AI sponsorship, connecting underrepresented 
                         communities with cutting-edge technology education and opportunities.
                     </p>
                     <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="bg-emerald/20 text-emerald px-3 py-1 rounded-full text-sm">AI Education</span>
-                        <span class="bg-neon-cyan/20 text-neon-cyan px-3 py-1 rounded-full text-sm">Social Impact</span>
-                        <span class="bg-neon-purple/20 text-neon-purple px-3 py-1 rounded-full text-sm">Mentorship</span>
+                        <span class="bg-emerald/20 text-emerald px-3 py-1 rounded-full text-sm" data-lang-key="project1-tag1">AI Education</span>
+                        <span class="bg-neon-cyan/20 text-neon-cyan px-3 py-1 rounded-full text-sm" data-lang-key="project1-tag2">Social Impact</span>
+                        <span class="bg-neon-purple/20 text-neon-purple px-3 py-1 rounded-full text-sm" data-lang-key="project1-tag3">Mentorship</span>
                     </div>
-                    <div class="text-sm text-gray-400">
+                    <div class="text-sm text-gray-400" data-lang-key="project1-impact">
                         <strong>Impact:</strong> Empowering the next generation of ethical AI practitioners
                     </div>
                 </div>
@@ -334,18 +389,18 @@
                 <div class="bg-deep-blue/50 p-8 rounded-xl border border-neon-cyan/20 card-hover">
                     <div class="flex items-center mb-4">
                         <div class="text-neon-cyan text-3xl mr-4">🔒</div>
-                        <h3 class="text-2xl font-semibold text-neon-cyan">Ethical Security Framework</h3>
+                        <h3 class="text-2xl font-semibold text-neon-cyan" data-lang-key="project2-title">Ethical Security Framework</h3>
                     </div>
-                    <p class="text-gray-300 mb-4 leading-relaxed">
+                    <p class="text-gray-300 mb-4 leading-relaxed" data-lang-key="project2-desc">
                         Developing comprehensive cybersecurity frameworks that balance protection with privacy, 
                         ensuring security measures enhance rather than restrict human potential.
                     </p>
                     <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="bg-neon-cyan/20 text-neon-cyan px-3 py-1 rounded-full text-sm">Cybersecurity</span>
-                        <span class="bg-emerald/20 text-emerald px-3 py-1 rounded-full text-sm">Privacy</span>
-                        <span class="bg-neon-purple/20 text-neon-purple px-3 py-1 rounded-full text-sm">Ethics</span>
+                        <span class="bg-neon-cyan/20 text-neon-cyan px-3 py-1 rounded-full text-sm" data-lang-key="project2-tag1">Cybersecurity</span>
+                        <span class="bg-emerald/20 text-emerald px-3 py-1 rounded-full text-sm" data-lang-key="project2-tag2">Privacy</span>
+                        <span class="bg-neon-purple/20 text-neon-purple px-3 py-1 rounded-full text-sm" data-lang-key="project2-tag3">Ethics</span>
                     </div>
-                    <div class="text-sm text-gray-400">
+                    <div class="text-sm text-gray-400" data-lang-key="project2-focus">
                         <strong>Focus:</strong> Human-centered security that protects without constraining
                     </div>
                 </div>
@@ -357,8 +412,8 @@
     <section id="publications" class="py-20">
         <div class="max-w-6xl mx-auto px-6">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-6">Publications & Thought Leadership</h2>
-                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                <h2 class="text-4xl font-bold mb-6" data-lang-key="publications-title">Thought Leadership</h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto" data-lang-key="publications-subtitle">
                     Insights on AI ethics, data governance, and cybersecurity awareness
                 </p>
             </div>
@@ -366,29 +421,29 @@
             <div class="grid md:grid-cols-3 gap-8">
                 <article class="bg-deep-blue/50 p-6 rounded-xl border border-neon-cyan/20 card-hover">
                     <div class="text-neon-cyan text-2xl mb-3">📝</div>
-                    <h3 class="text-lg font-semibold mb-3 text-neon-cyan">The Future of Ethical AI</h3>
-                    <p class="text-gray-300 text-sm mb-4 leading-relaxed">
+                    <h3 class="text-lg font-semibold mb-3 text-neon-cyan" data-lang-key="publication1-title">The Future of Ethical AI</h3>
+                    <p class="text-gray-300 text-sm mb-4 leading-relaxed" data-lang-key="publication1-desc">
                         Exploring how organizations can implement AI systems that prioritize human welfare and societal benefit.
                     </p>
-                    <div class="text-xs text-gray-400">Published on LinkedIn</div>
+                    <div class="text-xs text-gray-400" data-lang-key="publication1-source">Published on LinkedIn</div>
                 </article>
                 
                 <article class="bg-deep-blue/50 p-6 rounded-xl border border-emerald/20 card-hover">
                     <div class="text-emerald text-2xl mb-3">🔐</div>
-                    <h3 class="text-lg font-semibold mb-3 text-emerald">Cybersecurity in the Age of AI</h3>
-                    <p class="text-gray-300 text-sm mb-4 leading-relaxed">
+                    <h3 class="text-lg font-semibold mb-3 text-emerald" data-lang-key="publication2-title">Cybersecurity in the Age of AI</h3>
+                    <p class="text-gray-300 text-sm mb-4 leading-relaxed" data-lang-key="publication2-desc">
                         How artificial intelligence is reshaping cybersecurity landscapes and defense strategies.
                     </p>
-                    <div class="text-xs text-gray-400">Featured on Hub Hackers do Bem</div>
+                    <div class="text-xs text-gray-400" data-lang-key="publication2-source">Featured on Hub Hackers do Bem</div>
                 </article>
                 
                 <article class="bg-deep-blue/50 p-6 rounded-xl border border-neon-purple/20 card-hover">
                     <div class="text-neon-purple text-2xl mb-3">🌍</div>
-                    <h3 class="text-lg font-semibold mb-3 text-neon-purple">Technology for Social Good</h3>
-                    <p class="text-gray-300 text-sm mb-4 leading-relaxed">
+                    <h3 class="text-lg font-semibold mb-3 text-neon-purple" data-lang-key="publication3-title">Technology for Social Good</h3>
+                    <p class="text-gray-300 text-sm mb-4 leading-relaxed" data-lang-key="publication3-desc">
                         Bridging the gap between technological innovation and meaningful social impact initiatives.
                     </p>
-                    <div class="text-xs text-gray-400">Industry Whitepaper</div>
+                    <div class="text-xs text-gray-400" data-lang-key="publication3-source">Industry Whitepaper</div>
                 </article>
             </div>
         </div>
@@ -398,8 +453,8 @@
     <section id="contact" class="py-20 bg-trust-blue/20">
         <div class="max-w-4xl mx-auto px-6">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-6">Let's Shape the Future Together</h2>
-                <p class="text-xl text-gray-300">
+                <h2 class="text-4xl font-bold mb-6" data-lang-key="contact-title">Connect</h2>
+                <p class="text-xl text-gray-300" data-lang-key="contact-subtitle">
                     Ready to explore how technology and ethics can transform your organization?
                 </p>
             </div>
@@ -407,8 +462,8 @@
             <div class="grid md:grid-cols-2 gap-12">
                 <div class="space-y-8">
                     <div>
-                        <h3 class="text-2xl font-semibold mb-4 text-neon-cyan">Get in Touch</h3>
-                        <p class="text-gray-300 leading-relaxed mb-6">
+                        <h3 class="text-2xl font-semibold mb-4 text-neon-cyan" data-lang-key="contact-getintouch-title">Start a Conversation</h3>
+                        <p class="text-gray-300 leading-relaxed mb-6" data-lang-key="contact-getintouch-desc">
                             Whether you're looking to implement ethical AI, strengthen your cybersecurity posture, 
                             or lead digital transformation initiatives, I'm here to help guide your journey.
                         </p>
@@ -420,7 +475,7 @@
                             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                             </svg>
-                            <span>Connect on LinkedIn</span>
+                            <span data-lang-key="contact-linkedin">Connect on LinkedIn</span>
                         </a>
                         
                         <a id="email-link" href="#" class="flex items-center space-x-3 text-emerald hover:text-emerald/80 transition-colors">
@@ -435,25 +490,25 @@
                 <!-- WhatsApp Contact Form -->
                 <form id="whatsapp-form" class="space-y-6">
                     <div>
-                        <label for="wa-name" class="block text-sm font-medium mb-2 text-gray-300">Name</label>
+                        <label for="wa-name" class="block text-sm font-medium mb-2 text-gray-300" data-lang-key="form-name">Name</label>
                         <input type="text" id="wa-name" name="wa-name" required
                                class="w-full px-4 py-3 bg-deep-blue/50 border border-neon-cyan/20 rounded-lg focus:border-neon-cyan focus:outline-none transition-colors">
                     </div>
                     
                     <div>
-                        <label for="wa-email" class="block text-sm font-medium mb-2 text-gray-300">Email</label>
+                        <label for="wa-email" class="block text-sm font-medium mb-2 text-gray-300" data-lang-key="form-email">Email</label>
                         <input type="email" id="wa-email" name="wa-email" required
                                class="w-full px-4 py-3 bg-deep-blue/50 border border-neon-cyan/20 rounded-lg focus:border-neon-cyan focus:outline-none transition-colors">
                     </div>
                     
                     <div>
-                        <label for="wa-message" class="block text-sm font-medium mb-2 text-gray-300">Message</label>
+                        <label for="wa-message" class="block text-sm font-medium mb-2 text-gray-300" data-lang-key="form-message">Message</label>
                         <textarea id="wa-message" name="wa-message" rows="5" required
                                   class="w-full px-4 py-3 bg-deep-blue/50 border border-neon-cyan/20 rounded-lg focus:border-neon-cyan focus:outline-none transition-colors resize-none"></textarea>
                     </div>
                     
                     <button type="submit" 
-                            class="w-full bg-neon-cyan text-deep-blue py-3 rounded-lg font-semibold hover:bg-neon-cyan/90 transition-colors">
+                            class="w-full bg-neon-cyan text-deep-blue py-3 rounded-lg font-semibold hover:bg-neon-cyan/90 transition-colors" data-lang-key="form-submit">
                         Send via WhatsApp
                     </button>
                 </form>
@@ -464,32 +519,366 @@
 
     <!-- Footer -->
     <footer class="py-12 border-t border-trust-blue/20">
-        <div class="max-w-6xl mx-auto px-6 text-center">
-            <div class="text-2xl font-bold text-neon-cyan mb-4">Geovani dos Santos</div>
-            <p class="text-gray-400 mb-6">
+        <div class="max-w-6xl mx-auto px-6 text-center" data-lang-key="footer-content">
+            <div class="text-2xl font-bold text-neon-cyan mb-4" data-lang-key="footer-name">Geovani dos Santos</div>
+            <p class="text-gray-400 mb-6" data-lang-key="footer-tagline">
                 Building a secure, intelligent, and ethical future through technology
             </p>
-            <div class="text-sm text-gray-500">
+            <div class="text-sm text-gray-500" data-lang-key="footer-copyright">
                 © 2025 Geovani dos Santos. Empowering organizations through ethical technology.
             </div>
         </div>
     </footer>
 
     <script>
+        // --- TRANSLATION LOGIC ---
+        const translations = {
+            en: { // English translations
+                'desktop-nav-links': '<a href="#home" class="nav-link hover:text-neon-cyan transition-colors">Home</a><a href="#about" class="nav-link hover:text-neon-cyan transition-colors">About</a><a href="#services" class="nav-link hover:text-neon-cyan transition-colors">Services</a><a href="#projects" class="nav-link hover:text-neon-cyan transition-colors">Projects</a><a href="#publications" class="nav-link hover:text-neon-cyan transition-colors">Publications</a><a href="#contact" class="nav-link hover:text-neon-cyan transition-colors">Contact</a>',
+                'mobile-nav-links': '<a href="#home" class="nav-link block py-2 hover:text-neon-cyan transition-colors">Home</a><a href="#about" class="nav-link block py-2 hover:text-neon-cyan transition-colors">About</a><a href="#services" class="nav-link block py-2 hover:text-neon-cyan transition-colors">Services</a><a href="#projects" class="nav-link block py-2 hover:text-neon-cyan transition-colors">Projects</a><a href="#publications" class="nav-link block py-2 hover:text-neon-cyan transition-colors">Publications</a><a href="#contact" class="nav-link block py-2 hover:text-neon-cyan transition-colors">Contact</a>',
+                'home-text-content': '<h1 class="text-5xl md:text-6xl font-bold leading-tight fade-in is-visible">Building a <span class="text-neon-cyan glow-cyan">Secure</span>, <span class="text-emerald glow-emerald">Intelligent</span>, and <span class="text-neon-purple glow-purple">Ethical</span> Future</h1><p class="text-xl text-gray-300 leading-relaxed fade-in stagger-1 is-visible">Empowering organizations through the intersection of AI, Data Science, and Cybersecurity — where technology meets ethics and humanity.</p><div class="flex flex-wrap gap-4 fade-in stagger-2 is-visible"><a href="#about" class="bg-neon-cyan text-deep-blue px-8 py-3 rounded-lg font-semibold hover:bg-neon-cyan/90 transition-colors cursor-pointer">Explore My Mission</a><a href="#contact" class="border border-neon-cyan text-neon-cyan px-8 py-3 rounded-lg font-semibold hover:bg-neon-cyan/10 transition-colors cursor-pointer">Let\'s Connect</a></div>',
+                'about-title': 'About',
+                'about-subtitle': 'A forward-thinking professional consultant embodying the intersection of technology, ethics, and humanity',
+                'about-mission-title': 'Mission',
+                'about-mission-text': 'To empower organizations to make technology more ethical, inclusive, and impactful for society. I combine a hacker mindset with transformational leadership and a deep commitment to security, innovation, and sustainability.',
+                'about-video-player': '<div class="relative aspect-video max-w-3xl mx-auto rounded-lg overflow-hidden border-2 border-neon-cyan/30 shadow-lg shadow-neon-cyan/10"><iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/aGsmwgJkQGs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe></div>',
+                'about-values-section': '<h3 class="text-2xl font-semibold text-neon-purple text-center mb-10" data-lang-key="about-values-title">Guiding Values</h3><div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 text-center"><div class="bg-deep-blue/50 p-6 rounded-lg border border-neon-cyan/20"><div class="text-neon-cyan font-bold text-lg" data-lang-key="value-integrity">Integrity</div><div class="text-sm text-gray-400 mt-1" data-lang-key="value-integrity-desc">Ethical foundation</div></div><div class="bg-deep-blue/50 p-6 rounded-lg border border-emerald/20"><div class="text-emerald font-bold text-lg" data-lang-key="value-curiosity">Curiosity</div><div class="text-sm text-gray-400 mt-1" data-lang-key="value-curiosity-desc">Continuous learning</div></div><div class="bg-deep-blue/50 p-6 rounded-lg border border-neon-purple/20"><div class="text-neon-purple font-bold text-lg" data-lang-key="value-inclusivity">Inclusivity</div><div class="text-sm text-gray-400 mt-1" data-lang-key="value-inclusivity-desc">Technology for all</div></div><div class="bg-deep-blue/50 p-6 rounded-lg border border-neon-cyan/20"><div class="text-neon-cyan font-bold text-lg" data-lang-key="value-innovation">Innovation</div><div class="text-sm text-gray-400 mt-1" data-lang-key="value-innovation-desc">Future-focused</div></div><div class="bg-deep-blue/50 p-6 rounded-lg border border-emerald/20"><div class="text-emerald font-bold text-lg" data-lang-key="value-sustainability">Sustainability</div><div class="text-sm text-gray-400 mt-1" data-lang-key="value-sustainability-desc">Long-term impact</div></div><div class="bg-deep-blue/50 p-6 rounded-lg border border-neon-purple/20"><div class="text-neon-purple font-bold text-lg" data-lang-key="value-resilience">Resilience</div><div class="text-sm text-gray-400 mt-1" data-lang-key="value-resilience-desc">Adaptive strength</div></div></div>',
+                'about-journey-title': 'Journey',
+                'about-journey-text': 'From Fortaleza city to global impact — connecting human purpose with technological excellence. My journey represents the bridge between cutting-edge technology and meaningful human progress.',
+                'about-values-title': 'Guiding Values',
+                'value-integrity': 'Integrity', 'value-integrity-desc': 'Ethical foundation',
+                'value-curiosity': 'Curiosity', 'value-curiosity-desc': 'Continuous learning',
+                'value-inclusivity': 'Inclusivity', 'value-inclusivity-desc': 'Technology for all',
+                'value-innovation': 'Innovation', 'value-innovation-desc': 'Future-focused',
+                'value-sustainability': 'Sustainability', 'value-sustainability-desc': 'Long-term impact',
+                'value-resilience': 'Resilience', 'value-resilience-desc': 'Adaptive strength',
+                'services-title': 'Consulting Services',
+                'services-subtitle': 'Helping organizations anticipate and adapt to technological change through strategic consulting',
+                'service1-title': 'Ethical AI & Data Strategy',
+                'service1-desc': 'Developing responsible AI frameworks that align with organizational values and societal impact goals.',
+                'service2-title': 'Cybersecurity Awareness',
+                'service2-desc': 'Blue team defense strategies and security awareness programs that protect while enabling innovation.',
+                'service3-title': 'Digital Transformation',
+                'service3-desc': 'Leadership development programs that bridge technology adoption with human-centered change management.',
+                'service4-title': 'Future Readiness',
+                'service4-desc': 'Strategic workshops helping organizations prepare for emerging technologies and market disruptions.',
+                'projects-title': 'Key Projects',
+                'projects-subtitle': 'Initiatives that demonstrate the power of technology aligned with social impact',
+                'project1-title': 'ViabilizAI',
+                'project1-desc': 'A groundbreaking program enabling social mobility through AI sponsorship, connecting underrepresented communities with cutting-edge technology education and opportunities.',
+                'project1-tag1': 'AI Education',
+                'project1-tag2': 'Social Impact',
+                'project1-tag3': 'Mentorship',
+                'project1-impact': '<strong>Impact:</strong> Empowering the next generation of ethical AI practitioners',
+                'project2-title': 'Ethical Security Framework',
+                'project2-desc': 'Developing comprehensive cybersecurity frameworks that balance protection with privacy, ensuring security measures enhance rather than restrict human potential.',
+                'project2-tag1': 'Cybersecurity',
+                'project2-tag2': 'Privacy',
+                'project2-tag3': 'Ethics',
+                'project2-focus': '<strong>Focus:</strong> Human-centered security that protects without constraining',
+                'publications-title': 'Thought Leadership',
+                'publications-subtitle': 'Insights on AI ethics, data governance, and cybersecurity awareness',
+                'publication1-title': 'The Future of Ethical AI',
+                'publication1-desc': 'Exploring how organizations can implement AI systems that prioritize human welfare and societal benefit.',
+                'publication1-source': 'Published on LinkedIn',
+                'publication2-title': 'Cybersecurity in the Age of AI',
+                'publication2-desc': 'How artificial intelligence is reshaping cybersecurity landscapes and defense strategies.',
+                'publication2-source': 'Featured on Hub Hackers do Bem',
+                'publication3-title': 'Technology for Social Good',
+                'publication3-desc': 'Bridging the gap between technological innovation and meaningful social impact initiatives.',
+                'publication3-source': 'Industry Whitepaper',
+                'contact-title': 'Connect',
+                'contact-subtitle': 'Ready to explore how technology and ethics can transform your organization?',
+                'contact-getintouch-title': 'Start a Conversation',
+                'contact-getintouch-desc': 'Whether you\'re looking to implement ethical AI, strengthen your cybersecurity posture, or lead digital transformation initiatives, I\'m here to help guide your journey.',
+                'contact-linkedin': 'Connect on LinkedIn',
+                'form-name': 'Name',
+                'form-email': 'Email',
+                'form-message': 'Message',
+                'form-submit': 'Send via WhatsApp',
+                'footer-content': '<div class="text-2xl font-bold text-neon-cyan mb-4">Geovani dos Santos</div><p class="text-gray-400 mb-6">Building a secure, intelligent, and ethical future through technology</p><div class="text-sm text-gray-500">© 2025 Geovani dos Santos. Empowering organizations through ethical technology.</div>',
+            },
+            pt: { // Portuguese translations
+                'desktop-nav-links': '<a href="#home" class="nav-link hover:text-neon-cyan transition-colors">Início</a><a href="#about" class="nav-link hover:text-neon-cyan transition-colors">Sobre</a><a href="#services" class="nav-link hover:text-neon-cyan transition-colors">Serviços</a><a href="#projects" class="nav-link hover:text-neon-cyan transition-colors">Projetos</a><a href="#publications" class="nav-link hover:text-neon-cyan transition-colors">Publicações</a><a href="#contact" class="nav-link hover:text-neon-cyan transition-colors">Contato</a>',
+                'mobile-nav-links': '<a href="#home" class="nav-link block py-2 hover:text-neon-cyan transition-colors">Início</a><a href="#about" class="nav-link block py-2 hover:text-neon-cyan transition-colors">Sobre</a><a href="#services" class="nav-link block py-2 hover:text-neon-cyan transition-colors">Serviços</a><a href="#projects" class="nav-link block py-2 hover:text-neon-cyan transition-colors">Projetos</a><a href="#publications" class="nav-link block py-2 hover:text-neon-cyan transition-colors">Publicações</a><a href="#contact" class="nav-link block py-2 hover:text-neon-cyan transition-colors">Contato</a>',
+                'home-text-content': '<h1 class="text-5xl md:text-6xl font-bold leading-tight fade-in is-visible">Construindo um Futuro <span class="text-neon-cyan glow-cyan">Seguro</span>, <span class="text-emerald glow-emerald">Inteligente</span> e <span class="text-neon-purple glow-purple">Ético</span></h1><p class="text-xl text-gray-300 leading-relaxed fade-in stagger-1 is-visible">Capacitando organizações através da interseção de IA, Ciência de Dados e Cibersegurança — onde a tecnologia encontra a ética e a humanidade.</p><div class="flex flex-wrap gap-4 fade-in stagger-2 is-visible"><a href="#about" class="bg-neon-cyan text-deep-blue px-8 py-3 rounded-lg font-semibold hover:bg-neon-cyan/90 transition-colors cursor-pointer">Explore Minha Missão</a><a href="#contact" class="border border-neon-cyan text-neon-cyan px-8 py-3 rounded-lg font-semibold hover:bg-neon-cyan/10 transition-colors cursor-pointer">Vamos Conectar</a></div>',
+                'about-title': 'Sobre',
+                'about-subtitle': 'Um consultor profissional inovador que personifica a interseção entre tecnologia, ética e humanidade',
+                'about-mission-title': 'Missão',
+                'about-mission-text': 'Capacitar organizações para tornar a tecnologia mais ética, inclusiva e impactante para a sociedade. Combino uma mentalidade hacker com liderança transformacional e um profundo compromisso com segurança, inovação e sustentabilidade.',
+                'about-video-player': '<div class="relative aspect-video max-w-3xl mx-auto rounded-lg overflow-hidden border-2 border-neon-cyan/30 shadow-lg shadow-neon-cyan/10"><iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/aGsmwgJkQGs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe></div>',
+                'about-values-section': '<h3 class="text-2xl font-semibold text-neon-purple text-center mb-10" data-lang-key="about-values-title">Valores Orientadores</h3><div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 text-center"><div class="bg-deep-blue/50 p-6 rounded-lg border border-neon-cyan/20"><div class="text-neon-cyan font-bold text-lg" data-lang-key="value-integrity">Integridade</div><div class="text-sm text-gray-400 mt-1" data-lang-key="value-integrity-desc">Base ética</div></div><div class="bg-deep-blue/50 p-6 rounded-lg border border-emerald/20"><div class="text-emerald font-bold text-lg" data-lang-key="value-curiosity">Curiosidade</div><div class="text-sm text-gray-400 mt-1" data-lang-key="value-curiosity-desc">Aprendizado contínuo</div></div><div class="bg-deep-blue/50 p-6 rounded-lg border border-neon-purple/20"><div class="text-neon-purple font-bold text-lg" data-lang-key="value-inclusivity">Inclusividade</div><div class="text-sm text-gray-400 mt-1" data-lang-key="value-inclusivity-desc">Tecnologia para todos</div></div><div class="bg-deep-blue/50 p-6 rounded-lg border border-neon-cyan/20"><div class="text-neon-cyan font-bold text-lg" data-lang-key="value-innovation">Inovação</div><div class="text-sm text-gray-400 mt-1" data-lang-key="value-innovation-desc">Foco no futuro</div></div><div class="bg-deep-blue/50 p-6 rounded-lg border border-emerald/20"><div class="text-emerald font-bold text-lg" data-lang-key="value-sustainability">Sustentabilidade</div><div class="text-sm text-gray-400 mt-1" data-lang-key="value-sustainability-desc">Impacto a longo prazo</div></div><div class="bg-deep-blue/50 p-6 rounded-lg border border-neon-purple/20"><div class="text-neon-purple font-bold text-lg" data-lang-key="value-resilience">Resiliência</div><div class="text-sm text-gray-400 mt-1" data-lang-key="value-resilience-desc">Força adaptativa</div></div></div>',
+                'about-journey-title': 'Jornada',
+                'about-journey-text': 'Da cidade de Fortaleza ao impacto global — conectando o propósito humano com a excelência tecnológica. Minha jornada representa a ponte entre a tecnologia de ponta e o progresso humano significativo.',
+                'about-values-title': 'Valores Orientadores',
+                'value-integrity': 'Integridade', 'value-integrity-desc': 'Base ética',
+                'value-curiosity': 'Curiosidade', 'value-curiosity-desc': 'Aprendizado contínuo',
+                'value-inclusivity': 'Inclusividade', 'value-inclusivity-desc': 'Tecnologia para todos',
+                'value-innovation': 'Inovação', 'value-innovation-desc': 'Foco no futuro',
+                'value-sustainability': 'Sustentabilidade', 'value-sustainability-desc': 'Impacto a longo prazo',
+                'value-resilience': 'Resiliência', 'value-resilience-desc': 'Força adaptativa',
+                'services-title': 'Serviços de Consultoria',
+                'services-subtitle': 'Ajudando organizações a antecipar e se adaptar às mudanças tecnológicas através de consultoria estratégica',
+                'service1-title': 'Estratégia de IA Ética e Dados',
+                'service1-desc': 'Desenvolvendo frameworks de IA responsáveis que se alinham aos valores organizacionais e metas de impacto social.',
+                'service2-title': 'Conscientização em Cibersegurança',
+                'service2-desc': 'Estratégias de defesa (blue team) e programas de conscientização em segurança que protegem enquanto permitem a inovação.',
+                'service3-title': 'Transformação Digital',
+                'service3-desc': 'Programas de desenvolvimento de liderança que unem a adoção de tecnologia com a gestão de mudanças centrada no ser humano.',
+                'service4-title': 'Prontidão para o Futuro',
+                'service4-desc': 'Workshops estratégicos que ajudam organizações a se prepararem para tecnologias emergentes e disrupções de mercado.',
+                'projects-title': 'Projetos Chave',
+                'projects-subtitle': 'Iniciativas que demonstram o poder da tecnologia alinhada ao impacto social',
+                'project1-title': 'ViabilizAI',
+                'project1-desc': 'Um programa inovador que possibilita a mobilidade social através do patrocínio de IA, conectando comunidades sub-representadas com educação e oportunidades em tecnologia de ponta.',
+                'project1-tag1': 'Educação em IA',
+                'project1-tag2': 'Impacto Social',
+                'project1-tag3': 'Mentoria',
+                'project1-impact': '<strong>Impacto:</strong> Capacitando a próxima geração de profissionais de IA ética',
+                'project2-title': 'Framework de Segurança Ética',
+                'project2-desc': 'Desenvolvendo frameworks de cibersegurança abrangentes que equilibram proteção com privacidade, garantindo que as medidas de segurança aprimorem em vez de restringir o potencial humano.',
+                'project2-tag1': 'Cibersegurança',
+                'project2-tag2': 'Privacidade',
+                'project2-tag3': 'Ética',
+                'project2-focus': '<strong>Foco:</strong> Segurança centrada no ser humano que protege sem limitar',
+                'publications-title': 'Liderança de Opinião',
+                'publications-subtitle': 'Insights sobre ética em IA, governança de dados e conscientização em cibersegurança',
+                'publication1-title': 'O Futuro da IA Ética',
+                'publication1-desc': 'Explorando como as organizações podem implementar sistemas de IA que priorizam o bem-estar humano e o benefício social.',
+                'publication1-source': 'Publicado no LinkedIn',
+                'publication2-title': 'Cibersegurança na Era da IA',
+                'publication2-desc': 'Como a inteligência artificial está remodelando os cenários de cibersegurança e as estratégias de defesa.',
+                'publication2-source': 'Destaque no Hub Hackers do Bem',
+                'publication3-title': 'Tecnologia para o Bem Social',
+                'publication3-desc': 'Construindo a ponte entre a inovação tecnológica e iniciativas de impacto social significativo.',
+                'publication3-source': 'Whitepaper da Indústria',
+                'contact-title': 'Conecte-se',
+                'contact-subtitle': 'Pronto para explorar como a tecnologia e a ética podem transformar sua organização?',
+                'contact-getintouch-title': 'Inicie uma Conversa',
+                'contact-getintouch-desc': 'Se você busca implementar IA ética, fortalecer sua postura de cibersegurança ou liderar iniciativas de transformação digital, estou aqui para ajudar a guiar sua jornada.',
+                'contact-linkedin': 'Conecte-se no LinkedIn',
+                'form-name': 'Nome',
+                'form-email': 'E-mail',
+                'form-message': 'Mensagem',
+                'form-submit': 'Enviar via WhatsApp',
+                'footer-content': '<div class="text-2xl font-bold text-neon-cyan mb-4">Geovani dos Santos</div><p class="text-gray-400 mb-6">Construindo um futuro seguro, inteligente e ético através da tecnologia</p><div class="text-sm text-gray-500">© 2025 Geovani dos Santos. Capacitando organizações através da tecnologia ética.</div>',
+            }
+            ,
+            es: { // Spanish translations
+                'desktop-nav-links': '<a href="#home" class="nav-link hover:text-neon-cyan transition-colors">Inicio</a><a href="#about" class="nav-link hover:text-neon-cyan transition-colors">Sobre mí</a><a href="#services" class="nav-link hover:text-neon-cyan transition-colors">Servicios</a><a href="#projects" class="nav-link hover:text-neon-cyan transition-colors">Proyectos</a><a href="#publications" class="nav-link hover:text-neon-cyan transition-colors">Publicaciones</a><a href="#contact" class="nav-link hover:text-neon-cyan transition-colors">Contacto</a>',
+                'mobile-nav-links': '<a href="#home" class="nav-link block py-2 hover:text-neon-cyan transition-colors">Inicio</a><a href="#about" class="nav-link block py-2 hover:text-neon-cyan transition-colors">Sobre mí</a><a href="#services" class="nav-link block py-2 hover:text-neon-cyan transition-colors">Servicios</a><a href="#projects" class="nav-link block py-2 hover:text-neon-cyan transition-colors">Proyectos</a><a href="#publications" class="nav-link block py-2 hover:text-neon-cyan transition-colors">Contacto</a>',
+                'home-text-content': '<h1 class="text-5xl md:text-6xl font-bold leading-tight fade-in is-visible">Construyendo un Futuro <span class="text-neon-cyan glow-cyan">Seguro</span>, <span class="text-emerald glow-emerald">Inteligente</span> y <span class="text-neon-purple glow-purple">Ético</span></h1><p class="text-xl text-gray-300 leading-relaxed fade-in stagger-1 is-visible">Empoderando organizaciones a través de la intersección de IA, Ciencia de Datos y Ciberseguridad — donde la tecnología se encuentra con la ética y la humanidad.</p><div class="flex flex-wrap gap-4 fade-in stagger-2 is-visible"><a href="#about" class="bg-neon-cyan text-deep-blue px-8 py-3 rounded-lg font-semibold hover:bg-neon-cyan/90 transition-colors cursor-pointer">Explora Mi Misión</a><a href="#contact" class="border border-neon-cyan text-neon-cyan px-8 py-3 rounded-lg font-semibold hover:bg-neon-cyan/10 transition-colors cursor-pointer">Conectemos</a></div>',
+                'about-title': 'Sobre mí',
+                'about-subtitle': 'Un consultor profesional con visión de futuro que encarna la intersección de la tecnología, la ética y la humanidad',
+                'about-mission-title': 'Misión',
+                'about-mission-text': 'Empoderar a las organizaciones para que la tecnología sea más ética, inclusiva e impactante para la sociedad. Combino una mentalidad de hacker con un liderazgo transformador y un profundo compromiso con la seguridad, la innovación y la sostenibilidad.',
+                'about-video-player': '<div class="relative aspect-video max-w-3xl mx-auto rounded-lg overflow-hidden border-2 border-neon-cyan/30 shadow-lg shadow-neon-cyan/10"><iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/aGsmwgJkQGs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe></div>',
+                'about-values-section': '<h3 class="text-2xl font-semibold text-neon-purple text-center mb-10" data-lang-key="about-values-title">Valores Rectores</h3><div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 text-center"><div class="bg-deep-blue/50 p-6 rounded-lg border border-neon-cyan/20"><div class="text-neon-cyan font-bold text-lg" data-lang-key="value-integrity">Integridad</div><div class="text-sm text-gray-400 mt-1" data-lang-key="value-integrity-desc">Fundamento ético</div></div><div class="bg-deep-blue/50 p-6 rounded-lg border border-emerald/20"><div class="text-emerald font-bold text-lg" data-lang-key="value-curiosity">Curiosidad</div><div class="text-sm text-gray-400 mt-1" data-lang-key="value-curiosity-desc">Aprendizaje continuo</div></div><div class="bg-deep-blue/50 p-6 rounded-lg border border-neon-purple/20"><div class="text-neon-purple font-bold text-lg" data-lang-key="value-inclusivity">Inclusividad</div><div class="text-sm text-gray-400 mt-1" data-lang-key="value-inclusivity-desc">Tecnología para todos</div></div><div class="bg-deep-blue/50 p-6 rounded-lg border border-neon-cyan/20"><div class="text-neon-cyan font-bold text-lg" data-lang-key="value-innovation">Innovación</div><div class="text-sm text-gray-400 mt-1" data-lang-key="value-innovation-desc">Enfoque en el futuro</div></div><div class="bg-deep-blue/50 p-6 rounded-lg border border-emerald/20"><div class="text-emerald font-bold text-lg" data-lang-key="value-sustainability">Sostenibilidad</div><div class="text-sm text-gray-400 mt-1" data-lang-key="value-sustainability-desc">Impacto a largo plazo</div></div><div class="bg-deep-blue/50 p-6 rounded-lg border border-neon-purple/20"><div class="text-neon-purple font-bold text-lg" data-lang-key="value-resilience">Resiliencia</div><div class="text-sm text-gray-400 mt-1" data-lang-key="value-resilience-desc">Fuerza adaptativa</div></div></div>',
+                'about-journey-title': 'Trayectoria',
+                'about-journey-text': 'De la ciudad de Fortaleza al impacto global — conectando el propósito humano con la excelencia tecnológica. Mi trayectoria representa el puente entre la tecnología de punta y el progreso humano significativo.',
+                'about-values-title': 'Valores Rectores',
+                'value-integrity': 'Integridad', 'value-integrity-desc': 'Fundamento ético',
+                'value-curiosity': 'Curiosidad', 'value-curiosity-desc': 'Aprendizaje continuo',
+                'value-inclusivity': 'Inclusividad', 'value-inclusivity-desc': 'Tecnología para todos',
+                'value-innovation': 'Innovación', 'value-innovation-desc': 'Enfoque en el futuro',
+                'value-sustainability': 'Sostenibilidad', 'value-sustainability-desc': 'Impacto a largo plazo',
+                'value-resilience': 'Resiliencia', 'value-resilience-desc': 'Fuerza adaptativa',
+                'services-title': 'Servicios de Consultoría',
+                'services-subtitle': 'Ayudando a las organizaciones a anticipar y adaptarse al cambio tecnológico a través de la consultoría estratégica',
+                'service1-title': 'Estrategia de IA Ética y Datos',
+                'service1-desc': 'Desarrollando marcos de IA responsables que se alinean con los valores organizacionales y los objetivos de impacto social.',
+                'service2-title': 'Conciencia en Ciberseguridad',
+                'service2-desc': 'Estrategias de defensa (blue team) y programas de conciencia en seguridad que protegen mientras habilitan la innovación.',
+                'service3-title': 'Transformación Digital',
+                'service3-desc': 'Programas de desarrollo de liderazgo que unen la adopción de tecnología con la gestión del cambio centrada en el ser humano.',
+                'service4-title': 'Preparación para el Futuro',
+                'service4-desc': 'Talleres estratégicos que ayudan a las organizaciones a prepararse para tecnologías emergentes y disrupciones del mercado.',
+                'projects-title': 'Proyectos Clave',
+                'projects-subtitle': 'Iniciativas que demuestran el poder de la tecnología alineada con el impacto social',
+                'project1-title': 'ViabilizAI',
+                'project1-desc': 'Un programa innovador que permite la movilidad social a través del patrocinio de IA, conectando comunidades subrepresentadas con educación y oportunidades en tecnología de punta.',
+                'project1-tag1': 'Educación en IA',
+                'project1-tag2': 'Impacto Social',
+                'project1-tag3': 'Mentoría',
+                'project1-impact': '<strong>Impacto:</strong> Empoderando a la próxima generación de profesionales de IA ética',
+                'project2-title': 'Marco de Seguridad Ética',
+                'project2-desc': 'Desarrollando marcos de ciberseguridad integrales que equilibran la protección con la privacidad, asegurando que las medidas de seguridad mejoren en lugar de restringir el potencial humano.',
+                'project2-tag1': 'Ciberseguridad',
+                'project2-tag2': 'Privacidad',
+                'project2-tag3': 'Ética',
+                'project2-focus': '<strong>Foco:</strong> Seguridad centrada en el ser humano que protege sin limitar',
+                'publications-title': 'Liderazgo de Opinión',
+                'publications-subtitle': 'Perspectivas sobre ética en IA, gobernanza de datos y conciencia en ciberseguridad',
+                'publication1-title': 'El Futuro de la IA Ética',
+                'publication1-desc': 'Explorando cómo las organizaciones pueden implementar sistemas de IA que prioricen el bienestar humano y el beneficio social.',
+                'publication1-source': 'Publicado en LinkedIn',
+                'publication2-title': 'Ciberseguridad en la Era de la IA',
+                'publication2-desc': 'Cómo la inteligencia artificial está remodelando los paisajes de ciberseguridad y las estrategias de defensa.',
+                'publication2-source': 'Destacado en Hub Hackers do Bem',
+                'publication3-title': 'Tecnología para el Bien Social',
+                'publication3-desc': 'Cerrando la brecha entre la innovación tecnológica y las iniciativas de impacto social significativo.',
+                'publication3-source': 'Informe de la Industria',
+                'contact-title': 'Conecta',
+                'contact-subtitle': '¿Listo para explorar cómo la tecnología y la ética pueden transformar su organización?',
+                'contact-getintouch-title': 'Inicia una Conversación',
+                'contact-getintouch-desc': 'Ya sea que busques implementar IA ética, fortalecer tu postura de ciberseguridad o liderar iniciativas de transformación digital, estoy aquí para guiar tu viaje.',
+                'contact-linkedin': 'Conecta en LinkedIn',
+                'form-name': 'Nombre',
+                'form-email': 'Correo electrónico',
+                'form-message': 'Mensaje',
+                'form-submit': 'Enviar por WhatsApp',
+                'footer-content': '<div class="text-2xl font-bold text-neon-cyan mb-4">Geovani dos Santos</div><p class="text-gray-400 mb-6">Construyendo un futuro seguro, inteligente y ético a través de la tecnología</p><div class="text-sm text-gray-500">© 2025 Geovani dos Santos. Empoderando organizaciones a través de la tecnología ética.</div>',
+            },
+            zh: { // Chinese translations
+                'desktop-nav-links': '<a href="#home" class="nav-link hover:text-neon-cyan transition-colors">首页</a><a href="#about" class="nav-link hover:text-neon-cyan transition-colors">关于</a><a href="#services" class="nav-link hover:text-neon-cyan transition-colors">服务</a><a href="#projects" class="nav-link hover:text-neon-cyan transition-colors">项目</a><a href="#publications" class="nav-link hover:text-neon-cyan transition-colors">出版物</a><a href="#contact" class="nav-link hover:text-neon-cyan transition-colors">联系</a>',
+                'mobile-nav-links': '<a href="#home" class="nav-link block py-2 hover:text-neon-cyan transition-colors">首页</a><a href="#about" class="nav-link block py-2 hover:text-neon-cyan transition-colors">关于</a><a href="#services" class="nav-link block py-2 hover:text-neon-cyan transition-colors">服务</a><a href="#projects" class="nav-link block py-2 hover:text-neon-cyan transition-colors">项目</a><a href="#publications" class="nav-link block py-2 hover:text-neon-cyan transition-colors">联系</a>',
+                'home-text-content': '<h1 class="text-5xl md:text-6xl font-bold leading-tight fade-in is-visible">构建一个<span class="text-neon-cyan glow-cyan">安全</span>、<span class="text-emerald glow-emerald">智能</span>和<span class="text-neon-purple glow-purple">道德</span>的未来</h1><p class="text-xl text-gray-300 leading-relaxed fade-in stagger-1 is-visible">通过人工智能、数据科学和网络安全的交汇点赋能组织——在这里，技术与道德和人性相遇。</p><div class="flex flex-wrap gap-4 fade-in stagger-2 is-visible"><a href="#about" class="bg-neon-cyan text-deep-blue px-8 py-3 rounded-lg font-semibold hover:bg-neon-cyan/90 transition-colors cursor-pointer">探索我的使命</a><a href="#contact" class="border border-neon-cyan text-neon-cyan px-8 py-3 rounded-lg font-semibold hover:bg-neon-cyan/10 transition-colors cursor-pointer">联系我们</a></div>',
+                'about-title': '关于',
+                'about-subtitle': '一位具有前瞻性思维的专业顾问，体现了技术、道德和人性的交集',
+                'about-mission-title': '使命',
+                'about-mission-text': '赋能组织，使技术对社会更具道德、包容性和影响力。我将黑客思维与转型领导力以及对安全、创新和可持续性的深刻承诺相结合。',
+                'about-video-player': '<div class="relative aspect-video max-w-3xl mx-auto rounded-lg overflow-hidden border-2 border-neon-cyan/30 shadow-lg shadow-neon-cyan/10"><iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/aGsmwgJkQGs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe></div>',
+                'about-values-section': '<h3 class="text-2xl font-semibold text-neon-purple text-center mb-10" data-lang-key="about-values-title">指导价值观</h3><div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 text-center"><div class="bg-deep-blue/50 p-6 rounded-lg border border-neon-cyan/20"><div class="text-neon-cyan font-bold text-lg" data-lang-key="value-integrity">诚信</div><div class="text-sm text-gray-400 mt-1" data-lang-key="value-integrity-desc">道德基础</div></div><div class="bg-deep-blue/50 p-6 rounded-lg border border-emerald/20"><div class="text-emerald font-bold text-lg" data-lang-key="value-curiosity">好奇心</div><div class="text-sm text-gray-400 mt-1" data-lang-key="value-curiosity-desc">持续学习</div></div><div class="bg-deep-blue/50 p-6 rounded-lg border border-neon-purple/20"><div class="text-neon-purple font-bold text-lg" data-lang-key="value-inclusivity">包容性</div><div class="text-sm text-gray-400 mt-1" data-lang-key="value-inclusivity-desc">技术为人人</div></div><div class="bg-deep-blue/50 p-6 rounded-lg border border-neon-cyan/20"><div class="text-neon-cyan font-bold text-lg" data-lang-key="value-innovation">创新</div><div class="text-sm text-gray-400 mt-1" data-lang-key="value-innovation-desc">面向未来</div></div><div class="bg-deep-blue/50 p-6 rounded-lg border border-emerald/20"><div class="text-emerald font-bold text-lg" data-lang-key="value-sustainability">可持续性</div><div class="text-sm text-gray-400 mt-1" data-lang-key="value-sustainability-desc">长期影响</div></div><div class="bg-deep-blue/50 p-6 rounded-lg border border-neon-purple/20"><div class="text-neon-purple font-bold text-lg" data-lang-key="value-resilience">韧性</div><div class="text-sm text-gray-400 mt-1" data-lang-key="value-resilience-desc">适应性力量</div></div></div>',
+                'about-journey-title': '历程',
+                'about-journey-text': '从福塔雷萨市到全球影响——将人类目标与技术卓越联系起来。我的旅程代表了尖端技术与有意义的人类进步之间的桥梁。',
+                'about-values-title': '指导价值观',
+                'value-integrity': '诚信', 'value-integrity-desc': '道德基础',
+                'value-curiosity': '好奇心', 'value-curiosity-desc': '持续学习',
+                'value-inclusivity': '包容性', 'value-inclusivity-desc': '技术为人人',
+                'value-innovation': '创新', 'value-innovation-desc': '面向未来',
+                'value-sustainability': '可持续性', 'value-sustainability-desc': '长期影响',
+                'value-resilience': '韧性', 'value-resilience-desc': '适应性力量',
+                'services-title': '咨询服务',
+                'services-subtitle': '通过战略咨询帮助组织预测和适应技术变革',
+                'service1-title': '道德人工智能与数据战略',
+                'service1-desc': '制定符合组织价值观和社会影响目标的负责任的人工智能框架。',
+                'service2-title': '网络安全意识',
+                'service2-desc': '蓝队防御策略和安全意识计划，在保护的同时促进创新。',
+                'service3-title': '数字化转型',
+                'service3-desc': '将技术采用与以人为本的变革管理相结合的领导力发展计划。',
+                'service4-title': '未来准备',
+                'service4-desc': '帮助组织为新兴技术和市场颠覆做好准备的战略研讨会。',
+                'projects-title': '重点项目',
+                'projects-subtitle': '展示技术与社会影响相结合力量的举措',
+                'project1-title': 'ViabilizAI',
+                'project1-desc': '一个开创性的项目，通过人工智能赞助实现社会流动性，将代表性不足的社区与尖端技术教育和机会联系起来。',
+                'project1-tag1': '人工智能教育',
+                'project1-tag2': '社会影响',
+                'project1-tag3': '指导',
+                'project1-impact': '<strong>影响：</strong>赋能下一代道德人工智能从业者',
+                'project2-title': '道德安全框架',
+                'project2-desc': '制定平衡保护与隐私的全面网络安全框架，确保安全措施增强而非限制人类潜力。',
+                'project2-tag1': '网络安全',
+                'project2-tag2': '隐私',
+                'project2-tag3': '道德',
+                'project2-focus': '<strong>焦点：</strong>以人为本的安全，保护而不限制',
+                'publications-title': '思想领导力',
+                'publications-subtitle': '关于人工智能伦理、数据治理和网络安全意识的见解',
+                'publication1-title': '道德人工智能的未来',
+                'publication1-desc': '探讨组织如何实施优先考虑人类福祉和社会效益的人工智能系统。',
+                'publication1-source': '发表于领英',
+                'publication2-title': '人工智能时代下的网络安全',
+                'publication2-desc': '人工智能如何重塑网络安全格局和防御策略。',
+                'publication2-source': '精选于Hub Hackers do Bem',
+                'publication3-title': '技术为社会造福',
+                'publication3-desc': '弥合技术创新与有意义的社会影响举措之间的差距。',
+                'publication3-source': '行业白皮书',
+                'contact-title': '联系',
+                'contact-subtitle': '准备好探索技术和道德如何改变您的组织了吗？',
+                'contact-getintouch-title': '开始对话',
+                'contact-getintouch-desc': '无论您是希望实施道德人工智能、加强网络安全态势，还是领导数字化转型计划，我都在这里指导您的旅程。',
+                'contact-linkedin': '在领英上联系',
+                'form-name': '姓名',
+                'form-email': '电子邮件',
+                'form-message': '信息',
+                'form-submit': '通过WhatsApp发送',
+                'footer-content': '<div class="text-2xl font-bold text-neon-cyan mb-4">乔瓦尼·多斯桑托斯</div><p class="text-gray-400 mb-6">通过技术构建一个安全、智能和道德的未来</p><div class="text-sm text-gray-500">© 2025 乔瓦尼·多斯桑托斯。通过道德技术赋能组织。</div>',
+            }
+        };
+
+        const langData = {
+            pt: { flag: '🇧🇷', name: 'Português' },
+            en: { flag: '🇺🇸', name: 'English' },
+            es: { flag: '🇪🇸', name: 'Español' },
+            zh: { flag: '🇨🇳', name: '中文' }
+        };
+
+        const setLanguage = (lang) => {
+            document.documentElement.lang = lang === 'pt' ? 'pt-BR' : lang;
+            const translation = translations[lang];
+            document.querySelectorAll('[data-lang-key]').forEach(el => {
+                const key = el.getAttribute('data-lang-key');
+                if (translation && translation[key]) {
+                    el.innerHTML = translation[key];
+                }
+            });
+            localStorage.setItem('language', lang);
+            updateLangSwitchers(lang);
+        };
+
+        const updateLangSwitchers = (activeLang) => {
+            ['desktop', 'mobile'].forEach(type => {
+                const toggleBtn = document.getElementById(`${type}-lang-toggle`);
+                const menu = document.getElementById(`${type}-lang-menu`);
+                if (toggleBtn) toggleBtn.innerHTML = langData[activeLang].flag;
+                if (menu) {
+                    menu.innerHTML = ''; // Clear old options
+                    Object.keys(langData).forEach(lang => {
+                        if (lang !== activeLang) {
+                            const option = document.createElement('button');
+                            option.className = `flex items-center gap-3 w-full px-4 py-2 text-left hover:bg-trust-blue/50 transition-colors ${type === 'mobile' ? 'text-2xl' : 'text-base'}`;
+                            option.innerHTML = `<span class="text-xl">${langData[lang].flag}</span> <span>${langData[lang].name}</span>`;
+                            option.onclick = () => {
+                                setLanguage(lang);
+                                menu.classList.remove('show');
+                            };
+                            menu.appendChild(option);
+                        }
+                    });
+                }
+            });
+        };
+
+        const initLangSwitcher = (type) => {
+            const toggleBtn = document.getElementById(`${type}-lang-toggle`);
+            const menu = document.getElementById(`${type}-lang-menu`);
+            toggleBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                menu.classList.toggle('show');
+            });
+        };
+
+        initLangSwitcher('desktop');
+        initLangSwitcher('mobile');
+
+        // Initial language detection
+        const savedLang = localStorage.getItem('language');
+        const browserLang = navigator.language.split('-')[0];
+        const supportedLangs = ['pt', 'en', 'es', 'zh'];
+        const initialLang = savedLang || (supportedLangs.includes(browserLang) ? browserLang : 'en');
+        setLanguage(initialLang);
+
+        // Close dropdown when clicking outside
+        window.addEventListener('click', () => {
+            document.getElementById('desktop-lang-menu').classList.remove('show');
+            document.getElementById('mobile-lang-menu').classList.remove('show');
+        });
+
+
         // Mobile menu toggle
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         
         mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+            mobileMenu.classList.toggle('show');
         });
 
         // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function () {
                 // Close mobile menu on link click
                 // The `scroll-smooth` class on <html> handles the scrolling
-                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('show');
             });
         });
 
@@ -504,21 +893,21 @@
             emailLink.setAttribute('href', `mailto:${fullEmail}`);
         }
 
-      const whatsappForm = document.getElementById('whatsapp-form');
-      whatsappForm.addEventListener('submit', function(e) {
-          e.preventDefault();
-  
-          const name = document.getElementById('wa-name').value.trim();
-          const email = document.getElementById('wa-email').value.trim();
-          const message = document.getElementById('wa-message').value.trim();
-  
-          if (name && email && message) {
-              const phone = atob("NTU4NTk4OTA0NTU2OQ=="); // Obfuscated phone number
-              const text = `Hello, my name is ${name} (${email}).\n\n${message}`;
-              const url = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(text)}`;
-              window.open(url, "_blank");
-          }
-      });
+        const whatsappForm = document.getElementById('whatsapp-form');
+        whatsappForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+    
+            const name = document.getElementById('wa-name').value.trim();
+            const email = document.getElementById('wa-email').value.trim();
+            const message = document.getElementById('wa-message').value.trim();
+    
+            if (name && email && message) {
+                const phone = atob("NTU4NTk4OTA0NTU2OQ=="); // Obfuscated phone number
+                const text = `Hello, my name is ${name} (${email}).\n\n${message}`;
+                const url = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(text)}`;
+                window.open(url, "_blank");
+            }
+        });
 
         // Add scroll effect to navigation
         window.addEventListener('scroll', () => {
@@ -548,39 +937,25 @@
         // Observe all fade-in elements
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-        // Text Rotator Logic
-        const rotatorContainer = document.getElementById('text-rotator');
-        if (rotatorContainer) {
-            const words = rotatorContainer.querySelectorAll('.word');
-            let currentIndex = 0;
+        // Intersection Observer for active navigation link
+        const sections = document.querySelectorAll('main > section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
 
-            const setContainerWidth = () => {
-                // Find the longest word to set the container width
-                let maxWidth = 0;
-                words.forEach(word => {
-                    word.classList.add('active'); // Temporarily make it visible to measure
-                    if (word.offsetWidth > maxWidth) {
-                        maxWidth = word.offsetWidth;
-                    }
-                    word.classList.remove('active');
-                });
-                rotatorContainer.style.width = `${maxWidth}px`;
-                words[0].classList.add('active'); // Set the first word as active initially
-            };
+        const navObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const sectionId = entry.target.id;
+                    navLinks.forEach(link => {
+                        link.classList.remove('nav-active');
+                        if (link.getAttribute('href') === `#${sectionId}`) {
+                            link.classList.add('nav-active');
+                        }
+                    });
+                }
+            });
+        }, { rootMargin: '-50% 0px -50% 0px' });
 
-            const rotateWords = () => {
-                const currentWord = words[currentIndex];
-                const nextIndex = (currentIndex + 1) % words.length;
-                const nextWord = words[nextIndex];
-
-                currentWord.classList.remove('active');
-                nextWord.classList.add('active');
-                currentIndex = nextIndex;
-            };
-
-            setContainerWidth();
-            setInterval(rotateWords, 2500); // Rotate every 2.5 seconds
-        }
+        sections.forEach(section => navObserver.observe(section));
     </script>
 </body>
 </html>
